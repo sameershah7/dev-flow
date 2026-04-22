@@ -1,1 +1,55 @@
 @import "tailwindcss";
+
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.no-transition {
+  transition: none !important;
+}
+
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text-main: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-primary: var(--primary);
+  --color-hover: var(--hover);
+  --color-active: var(--active);
+  --color-border: var(--border);
+
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-warning: var(--warning);
+}
+
+:root {
+  --bg: #ffffff;
+  --surface: #f9fafb;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --primary: #3b82f6;
+  --border: #e5e7eb;
+  --hover: #f3f4f6;
+  --active: #e5e7eb;
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+}
+
+[data-theme="dark"]{
+  --bg: #111827;
+  --surface: #1f2937;
+  --text: #f9fafb;
+  --text-muted: #9ca3af;
+  --primary: #60a5fa;
+  --border: #374151;
+  --hover: #1f2937;
+  --active: #374151;
+  --success: #34d399;
+  --error: #f87171;
+  --warning: #fbbf24;
+}
+
