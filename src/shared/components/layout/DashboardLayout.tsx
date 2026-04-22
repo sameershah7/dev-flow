@@ -23,10 +23,10 @@ export function DashboardLayout() {
                 onCloseMobile={handleCloseSidebar}
             />
 
-            <main className="flex-1 flex flex-col h-screen overflow-y-auto">
+            <main className="flex-1 h-screen">
                 <Navbar onToggleSidebar={handleToggleSidebar} />
 
-                <div className="p-4 md:p-6">
+                <div className="h-[calc(100vh-4rem)] p-4 md:p-6 overflow-y-auto">
                     <Outlet />
                 </div>
             </main>
