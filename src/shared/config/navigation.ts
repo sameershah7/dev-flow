@@ -10,7 +10,9 @@ import {
     User,
     LogOut,
     ChevronDown,
-    Menu
+    Menu,
+    Sun,
+    Moon,
 } from "lucide-react";
 
 // 1. Navigation Links
@@ -35,6 +37,8 @@ export const navIcons = {
     dropdown: ChevronDown,
     menu: Menu,
     settings: Settings,
+    darkmode: Moon,
+    lighMode: Sun,
 };
 
 

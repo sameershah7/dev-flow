@@ -1,11 +1,12 @@
+import { useState } from "react";
+
 import ChartHeader from "./components/ChartHeader";
 import TaskItem from "./components/TaskItem";
 import StatsCard from "./components/StatsCard";
-import { useState } from "react";
+import AddTaskModal from "./components/AddTaskModal";
 
 interface Task {
-    id: number;
-    name: string;
+    id: number; name: string;
     due: string;
     priority: "high" | "med" | "low";
     done: boolean;
@@ -13,16 +14,33 @@ interface Task {
 
 export function DashboardPage() {
     const [tasks, setTasks] = useState<Task[]>(tasksData);
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const handleToggle = (id: number | string) => {
+    const handleToggle = (id: number | string): void => {
         setTasks(prev => prev.map(i => i.id === Number(id) ? { ...i, done: !i.done } : i));
     }
 
-    // Data for statCard
-    const totalTask = tasks.length;
-    const completedTask = tasks.filter(i => i.done === true).length;
-    const inProgress = tasks.filter(i => i.done === false).length;
-    const highPriority = tasks.filter(i => i.priority === "high" && i.done !== true).length;
+    const handleModal = (): void => {
+        setIsModalOpen(!isModalOpen);
+    }
+
+    const handleAddTask = (newTaskData: { name: string; priority: "high" | "med" | "low" }) => {
+        const newTask = {
+            id: Date.now(),
+            name: newTaskData.name,
+            due: "Today",
+            priority: newTaskData.priority,
+            done: false
+        };
+
+        setTasks([newTask, ...tasks]); // Add new task to the top of the list
+    };
+
+    // Data for statsCard
+    const totalTask = tasks.length || 0;
+    const completedTask = tasks.filter(i => i.done === true).length || 0;
+    const inProgress = tasks.filter(i => i.done === false).length || 0;
+    const highPriority = tasks.filter(i => i.priority === "high" && i.done !== true).length || 0;
     const completionPercentage = totalTask > 0 ? Math.round((completedTask / totalTask) * 100) : 0;
 
     return (
@@ -58,8 +76,8 @@ export function DashboardPage() {
 
             {/* Tasks Container */}
             <div className="bg-surface border border-border rounded-xl overflow-hidden min-h-[350px]">
-                <ChartHeader />
-
+                <ChartHeader toggleModal={handleModal} />
+                {isModalOpen && <AddTaskModal toggleModal={handleModal} onAddTask={handleAddTask} />}
                 <div className="flex flex-col">
                     {tasks.map((item) => (
                         <TaskItem

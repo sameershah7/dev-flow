@@ -14,7 +14,7 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
 
 
     return (
-        <nav className="h-16 bg-bg/80 backdrop-blur-md border-b border-border flex justify-between items-center sticky top-0 z-30 px-4">
+        <nav className="h-16 bg-bg/80 backdrop-blur-md border-b border-border flex justify-between items-center sticky top-0 z-30 lg:px-4">
             {/* Left Side */}
             <div className="flex items-center gap-4">
                 <button
@@ -23,7 +23,7 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
                 >
                     <navIcons.menu />
                 </button>
-                <h1 className="text-lg font-bold text-text-main tracking-tight">Dashboard</h1>
+                <h1 className="md:text-md lg:text-lg font-bold text-text-main tracking-tight">Dashboard</h1>
             </div>
 
             {/* Right Side */}
@@ -38,9 +38,9 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
 
                 <button
                     onClick={toggleTheme}
-                    className="px-3 py-1 text-sm rounded border border-border bg-surface text-text-main hover:bg-hover transition-colors"
+                    className="px-3 py-1 rounded border border-border bg-surface text-text-main hover:bg-hover transition-colors"
                 >
-                    {theme === "light" ? "Dark" : "Light"}
+                    {theme === "light" ? <navIcons.darkmode /> : <navIcons.lighMode />}
                 </button>
 
                 {/* Profile Dropdown */}

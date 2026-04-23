@@ -53,3 +53,6 @@
   --warning: #fbbf24;
 }
 
+Button{
+    cursor: pointer;
+}
