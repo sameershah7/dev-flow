@@ -2,18 +2,18 @@ import { useState } from "react";
 
 interface AddTaskModalProps {
     toggleModal: () => void;
-    onAddTask: (task: { name: string; priority: "high" | "med" | "low" }) => void;
+    onAddTask: (taskData: { title: string; priority: "high" | "med" | "low" }) => void;
 }
 
 export default function AddTaskModal({ toggleModal, onAddTask }: AddTaskModalProps) {
-    const [name, setName] = useState("");
+    const [title, setTask] = useState("");
     const [priority, setPriority] = useState<"high" | "med" | "low">("med");
 
     const handleSubmit = () => {
-        if (!name.trim()) return;
+        if (!title.trim()) return;
 
         onAddTask({
-            name,
+            title,
             priority,
         });
 
@@ -24,7 +24,7 @@ export default function AddTaskModal({ toggleModal, onAddTask }: AddTaskModalPro
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-text-main/40 backdrop-blur-xs" onClick={toggleModal} />
 
-            <div className="relative w-full max-w-4xl bg-bg border border-border rounded-2xl shadow-2xl overflow-hidden">
+            <div className="relative w-full max-w-3xl bg-bg border border-border rounded-2xl shadow-2xl overflow-hidden">
                 <div className="p-4 border-b border-border bg-surface/50 flex justify-between items-center">
                     <h2 className="text-lg font-bold text-text-main">New Task</h2>
                     <button onClick={toggleModal} className="text-text-muted hover:text-text-main text-2xl">×</button>
@@ -48,8 +48,8 @@ export default function AddTaskModal({ toggleModal, onAddTask }: AddTaskModalPro
                         <label className="block text-sm font-medium text-text-muted mb-1.5">Task Description</label>
                         <textarea
                             rows={4}
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={title}
+                            onChange={(e) => setTask(e.target.value)}
                             placeholder="What needs to be done?"
                             className="w-full bg-surface border border-border text-text-main rounded-lg px-4 py-2 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none"
                         />

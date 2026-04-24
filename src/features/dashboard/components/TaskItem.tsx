@@ -1,9 +1,9 @@
 interface TaskProps {
-    id: string;
+    id: number;
     title: string;
     priority: "High" | "Medium" | "Low";
     isCompleted: boolean;
-    onToggle: (id: string) => void;
+    onToggle: (id: number) => void;
 }
 
 export default function TaskItem({ id, title, priority, isCompleted, onToggle }: TaskProps) {
@@ -25,10 +25,7 @@ export default function TaskItem({ id, title, priority, isCompleted, onToggle }:
                             checked:bg-primary checked:border-primary flex items-center justify-center transition-colors duration-200
                             after:content-['✓'] after:text-white after:text-xs after:font-bold after:opacity-0 checked:after:opacity-100 "
                 />
-                <span className={`text-sm transition-all duration-300 ${isCompleted
-                    ? "line-through text-text-muted opacity-60"
-                    : "text-text-main"
-                    }`}>
+                <span className="text-text-main text-sm transition-all duration-300 ">
                     {title}
                 </span>
             </div>
