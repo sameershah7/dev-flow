@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom"
 import { DashboardLayout } from "../shared/components/layout/DashboardLayout";
+
 import DashboardPage from "../features/dashboard/DashboardPage";
+import TaskPage from "../features/tasks/TaskPage";
 
 export const router = createBrowserRouter([
     {
@@ -10,6 +12,10 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 element: <DashboardPage />
+            },
+            {
+                path: "tasks",
+                element: <TaskPage />
             },
         ],
     },

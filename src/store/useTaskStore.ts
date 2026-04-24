@@ -22,6 +22,7 @@ type TaskStore = {
     // actions
     addTask: (title: string, priority: Task["priority"]) => void;
     toggleTask: (id: number) => void;
+    deleteTask: (id: number) => void;
 
     // selectors 
     getPendingTasks: () => Task[];
@@ -59,6 +60,12 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
             tasks: state.tasks.map((task) =>
                 task.id === id ? { ...task, done: !task.done } : task
             )
+        }));
+    },
+
+    deleteTask: (id: number) => {
+        set((state) => ({
+            tasks: state.tasks.filter((task) => task.id !== id),
         }));
     },
 
