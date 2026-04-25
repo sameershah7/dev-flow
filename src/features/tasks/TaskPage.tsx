@@ -9,10 +9,7 @@ export default function TasksPage() {
     const [activeFilter, setActiveFilter] = useState<"all" | "pending" | "completed">("all");
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
-
-    // const tasks = useTaskStore((state) => state.tasks);
-    // const deleteTask = useTaskStore((state) => state.deleteTask);
-    const { tasks, searchQuery, deleteTask } = useTaskStore();
+    const { tasks, searchQuery, deleteTask, toggleTask } = useTaskStore();
 
     const filteredTasks = tasks
         .filter((t) => {
@@ -53,7 +50,11 @@ export default function TasksPage() {
 
             <div className="bg-surface border border-border rounded-xl overflow-hidden">
                 <div className="overflow-x-auto">
-                    <TaskTable tasks={filteredTasks} onDelete={openDeleteModal} />
+                    <TaskTable
+                        tasks={filteredTasks}
+                        onDelete={openDeleteModal}
+                        isComplete={toggleTask}
+                    />
                 </div>
             </div>
 

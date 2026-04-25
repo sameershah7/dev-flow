@@ -3,9 +3,10 @@ import { TaskRow } from "./TaskRow";
 type TaskTableProps = {
     tasks: any[];
     onDelete: (id: number) => void;
+    isComplete: (id: number) => void;
 };
 
-export function TaskTable({ tasks, onDelete }: TaskTableProps) {
+export function TaskTable({ tasks, onDelete, isComplete }: TaskTableProps) {
     return (
         <div className="bg-surface border border-border rounded-xl overflow-hidden">
             <div className="overflow-x-auto">
@@ -27,6 +28,7 @@ export function TaskTable({ tasks, onDelete }: TaskTableProps) {
                                 key={task.id}
                                 task={task}
                                 onDelete={onDelete}
+                                isComplete={isComplete}
                             />
                         ))}
                     </tbody>

@@ -1,4 +1,5 @@
 import { Button } from "../../../shared/components/ui/Button.tsx";
+import { Checkbox } from "../../../shared/components/ui/Checkbox.tsx";
 import { HighlightedText } from "../../../shared/components/ui/HighlightedText.tsx";
 import { useTaskStore } from "../../../store/useTaskStore.ts";
 
@@ -12,18 +13,13 @@ type TaskRowProps = {
     onDelete: (id: number) => void;
 };
 
-export function TaskRow({ task, onDelete }: TaskRowProps) {
+export function TaskRow({ task, onDelete, isComplete }: TaskRowProps) {
     const { searchQuery } = useTaskStore();
 
     return (
         <tr className="hover:bg-hover/50 transition-colors group">
             <td className="px-6 py-4">
-                <input
-                    type="checkbox"
-                    checked={task.done}
-                    readOnly
-                    className="w-5 h-5 rounded border-border accent-primary"
-                />
+                <Checkbox checked={task.done} onChange={() => isComplete(task.id)} />
             </td>
 
             <td className="px-6 py-4">
