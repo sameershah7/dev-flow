@@ -1,24 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { type Task } from "../../../store/useTaskStore";
 
-interface AddTaskModalProps {
+interface TaskFormModalProps {
     toggleModal: () => void;
-    onAddTask: (taskData: { title: string; priority: "high" | "med" | "low" }) => void;
+    onSave: (data: Task) => void;
+    initialData?: { title: string; priority: "high" | "med" | "low" };
 }
 
-export default function AddTaskModal({ toggleModal, onAddTask }: AddTaskModalProps) {
+export function TaskFormModal({ toggleModal, onSave, initialData }: TaskFormModalProps) {
     const [title, setTask] = useState("");
     const [priority, setPriority] = useState<"high" | "med" | "low">("med");
+
+    useEffect(() => {
+        if (initialData) {
+            setTask(initialData.title);
+            setPriority(initialData.priority);
+        }
+    }, [initialData]);
 
     const handleSubmit = () => {
         if (!title.trim()) return;
 
-        onAddTask({
+        onSave({
+            id: Date.now(),
             title,
             priority,
+            done: false,
         });
 
         toggleModal();
     };
+
+    const isEditMode = !!initialData;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -26,7 +39,9 @@ export default function AddTaskModal({ toggleModal, onAddTask }: AddTaskModalPro
 
             <div className="relative w-full max-w-3xl bg-bg border border-border rounded-2xl shadow-2xl overflow-hidden">
                 <div className="p-4 border-b border-border bg-surface/50 flex justify-between items-center">
-                    <h2 className="text-lg font-bold text-text-main">New Task</h2>
+                    <h2 className="text-lg font-bold text-text-main">
+                        {isEditMode ? "Update Task" : "New Task"}
+                    </h2>
                     <button onClick={toggleModal} className="text-text-muted hover:text-text-main text-2xl">×</button>
                 </div>
 
@@ -64,7 +79,7 @@ export default function AddTaskModal({ toggleModal, onAddTask }: AddTaskModalPro
                         onClick={handleSubmit}
                         className="px-6 py-2 text-sm font-semibold bg-primary text-white hover:brightness-110 rounded-lg active:scale-95 transition-all shadow-md"
                     >
-                        Create Task
+                        {isEditMode ? "Save Changes" : "Create Task"}
                     </button>
                 </div>
             </div>

@@ -1,19 +1,16 @@
 import { Button } from "../../../shared/components/ui/Button.tsx";
 import { Checkbox } from "../../../shared/components/ui/Checkbox.tsx";
 import { HighlightedText } from "../../../shared/components/ui/HighlightedText.tsx";
-import { useTaskStore } from "../../../store/useTaskStore.ts";
+import { useTaskStore, type Task } from "../../../store/useTaskStore";
 
 type TaskRowProps = {
-    task: {
-        id: number;
-        title: string;
-        priority: "high" | "med" | "low";
-        done: boolean;
-    };
+    task: Task;
     onDelete: (id: number) => void;
+    isComplete: (id: number) => void;
+    editTask: (task: Task) => void;
 };
 
-export function TaskRow({ task, onDelete, isComplete }: TaskRowProps) {
+export function TaskRow({ task, onDelete, isComplete, editTask }: TaskRowProps) {
     const { searchQuery } = useTaskStore();
 
     return (
@@ -38,7 +35,7 @@ export function TaskRow({ task, onDelete, isComplete }: TaskRowProps) {
             </td>
 
             <td className="px-6 py-4 text-right space-x-2">
-                <Button variant="ghost">Edit</Button>
+                <Button variant="ghost" onClick={() => editTask(task)}>Edit</Button>
                 <Button variant="danger" onClick={() => onDelete(task.id)}>
                     Delete
                 </Button>

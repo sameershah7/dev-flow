@@ -1,12 +1,14 @@
 import { TaskRow } from "./TaskRow";
+import { type Task } from "../../../store/useTaskStore"
 
 type TaskTableProps = {
     tasks: any[];
     onDelete: (id: number) => void;
     isComplete: (id: number) => void;
+    editTask: (data: Task) => void;
 };
 
-export function TaskTable({ tasks, onDelete, isComplete }: TaskTableProps) {
+export function TaskTable({ tasks, onDelete, isComplete, editTask }: TaskTableProps) {
     return (
         <div className="bg-surface border border-border rounded-xl overflow-hidden">
             <div className="overflow-x-auto">
@@ -29,6 +31,7 @@ export function TaskTable({ tasks, onDelete, isComplete }: TaskTableProps) {
                                 task={task}
                                 onDelete={onDelete}
                                 isComplete={isComplete}
+                                editTask={editTask}
                             />
                         ))}
                     </tbody>

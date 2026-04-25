@@ -4,27 +4,28 @@ import { useTaskStore } from "../../store/useTaskStore";
 import ChartHeader from "./components/ChartHeader";
 import TaskItem from "./components/TaskItem";
 import StatsCard from "./components/StatsCard";
-import AddTaskModal from "./components/AddTaskModal";
+import { TaskFormModal } from "../../shared/components/ui/TaskFormModal";
 
 export default function DashboardPage() {
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const addTask = useTaskStore((state) => state.addTask);
-    const getStats = useTaskStore((state) => state.getStats);
-    const uncompleteTasks = useTaskStore((state) => state.tasks);
-    const toggleTask = useTaskStore((state) => state.toggleTask);
+    const { tasks, addTask, getStats, toggleTask } = useTaskStore();
 
     const stats = getStats();
-    const pendingTasks = uncompleteTasks
+
+    const pendingTasks = tasks
         .filter(t => !t.done)
         .sort((a, b) => b.id - a.id) // Newest IDs (timestamps) first
-        .slice(0, 10); const handleModal = (): void => {
-            setIsModalOpen(!isModalOpen);
-        }
+        .slice(0, 10);
+
+    const handleModal = (): void => {
+        setIsModalOpen(!isModalOpen);
+    }
 
     const handleAddTask = (newTaskData: { title: string; priority: "high" | "med" | "low" }) => {
         addTask(newTaskData.title, newTaskData.priority);
     };
+
     return (
         <div className="space-y-6">
             {/* Stats Grid */}
@@ -59,7 +60,7 @@ export default function DashboardPage() {
             {/* Tasks Container */}
             <div className="bg-surface border border-border rounded-xl overflow-hidden min-h-87.5">
                 <ChartHeader toggleModal={handleModal} />
-                {isModalOpen && <AddTaskModal toggleModal={handleModal} onAddTask={handleAddTask} />}
+                {isModalOpen && <TaskFormModal toggleModal={handleModal} onSave={handleAddTask} />}
                 <div className="flex flex-col">
                     {pendingTasks.map((item) => (
                         <TaskItem
