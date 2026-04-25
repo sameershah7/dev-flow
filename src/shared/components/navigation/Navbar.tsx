@@ -3,6 +3,7 @@ import { useState } from "react";
 import { navIcons } from "../../config/navigation";
 import profileImg from "../../../assets/vite.svg";
 import { useTheme } from "../../hooks/useTheme";
+import { useTaskStore } from "../../../store/useTaskStore";
 
 interface NavbarProps {
     onToggleSidebar: () => void;
@@ -11,7 +12,7 @@ interface NavbarProps {
 export default function Navbar({ onToggleSidebar }: NavbarProps) {
     const { theme, toggleTheme } = useTheme()
     const [isProfileOpen, setIsProfileOpen] = useState(false);
-
+    const { setSearchQuery } = useTaskStore();
 
     return (
         <nav className="h-16 bg-bg/80 backdrop-blur-md border-b border-border flex justify-between items-center sticky top-0 z-30 lg:px-4">
@@ -31,8 +32,9 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
                 <div className="hidden sm:flex items-center bg-surface border border-border focus-within:border-primary focus-within:bg-bg px-3 py-1.5 rounded-full transition-all">
                     <span className="text-text-muted"><navIcons.search /></span>
                     <input
-                        placeholder="Search anything..."
                         className="bg-transparent border-none outline-0 text-sm ml-2 w-48 text-text-main placeholder:text-text-muted"
+                        placeholder="Search anything..."
+                        onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
 

@@ -10,14 +10,19 @@ export default function TasksPage() {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
 
-    const deleteTask = useTaskStore((state) => state.deleteTask);
-    const tasks = useTaskStore((state) => state.tasks);
+    // const tasks = useTaskStore((state) => state.tasks);
+    // const deleteTask = useTaskStore((state) => state.deleteTask);
+    const { tasks, searchQuery, deleteTask } = useTaskStore();
 
-    const filteredTasks = tasks.filter((t) => {
-        if (activeFilter === "pending") return !t.done;
-        if (activeFilter === "completed") return t.done;
-        return true;
-    });
+    const filteredTasks = tasks
+        .filter((t) => {
+            if (activeFilter === "pending") return !t.done;
+            if (activeFilter === "completed") return t.done;
+            return true;
+        })
+        .filter((t) =>
+            t.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
     const openDeleteModal = (id: number) => {
         setSelectedTaskId(id);
@@ -55,4 +60,3 @@ export default function TasksPage() {
         </div>
     );
 }
-

@@ -1,4 +1,6 @@
 import { Button } from "../../../shared/components/ui/Button.tsx";
+import { HighlightedText } from "../../../shared/components/ui/HighlightedText.tsx";
+import { useTaskStore } from "../../../store/useTaskStore.ts";
 
 type TaskRowProps = {
     task: {
@@ -11,6 +13,8 @@ type TaskRowProps = {
 };
 
 export function TaskRow({ task, onDelete }: TaskRowProps) {
+    const { searchQuery } = useTaskStore();
+
     return (
         <tr className="hover:bg-hover/50 transition-colors group">
             <td className="px-6 py-4">
@@ -22,13 +26,8 @@ export function TaskRow({ task, onDelete }: TaskRowProps) {
                 />
             </td>
 
-            <td
-                className={`px-6 py-4 text-sm ${task.done
-                    ? "line-through text-text-muted"
-                    : "text-text-main"
-                    }`}
-            >
-                {task.title}
+            <td className="px-6 py-4">
+                <HighlightedText text={task.title} query={searchQuery} />
             </td>
 
             <td className="px-6 py-4">

@@ -27,7 +27,11 @@ type TaskStore = {
     // selectors 
     getPendingTasks: () => Task[];
     getStats: () => TaskStats;
+
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
 };
+
 export const useTaskStore = create<TaskStore>((set, get) => ({
     tasks: [
         { id: 1, title: "Design system audit", priority: "high", done: false },
@@ -86,5 +90,8 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
             highPriority: tasks.filter((i) => i.priority === "high" && !i.done).length, completionRate: tasks.length > 0 ? Math.round((completed / totalTask) * 100) : 0,
         };
     },
+
+    searchQuery: "",
+    setSearchQuery: (query) => set({ searchQuery: query.replace(/\s+/g, " ") }),
 
 }));
