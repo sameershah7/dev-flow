@@ -11,7 +11,7 @@ export type Note = {
 type NoteStore = {
     notes: Note[];
 
-    // addNote: () => void;
+    addNote: (title: string, content: string) => void;
     // updateNote: () => void;
     // deleteNote: () => void;
 
@@ -42,6 +42,27 @@ export const useNoteStore = create<NoteStore>((set, get) => ({
             createdAt: "2026-04-23",
             updatedAt: "2026-04-23",
         },
-
     ],
+
+    addNote: (title: string, content: string) => {
+        set((state) => ({
+            notes: [
+                {
+                    id: Date.now(),
+                    title: title,
+                    content: content,
+                    createdAt: new Date().toISOString().split('T')[0],
+                    updatedAt: "",
+                },
+                ...state.notes
+            ],
+        }))
+    },
+
+
+
+
+
+
+
 }))
