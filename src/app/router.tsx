@@ -3,6 +3,7 @@ import { DashboardLayout } from "../shared/components/layout/DashboardLayout";
 
 import DashboardPage from "../features/dashboard/DashboardPage";
 import TaskPage from "../features/tasks/TaskPage";
+import NotesPage from "../features/notes/NotesPage";
 
 export const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
             {
                 path: "tasks",
                 element: <TaskPage />
+            },
+            {
+                path: "notes",
+                element: <NotesPage />
             },
         ],
     },

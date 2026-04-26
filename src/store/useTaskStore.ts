@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export interface Task {
+export type Task = {
     id: number;
     title: string;
     priority: "high" | "med" | "low";
@@ -35,15 +35,15 @@ type TaskStore = {
 
 export const useTaskStore = create<TaskStore>((set, get) => ({
     tasks: [
-        // { id: 1, title: "Design system audit", priority: "high", done: false },
-        // { id: 2, title: "User interview prep", priority: "med", done: false },
-        // { id: 3, title: "Update onboarding flow", priority: "med", done: true },
-        // { id: 4, title: "Write release notes", priority: "low", done: false },
-        // { id: 5, title: "Fix nav bar bug", priority: "high", done: true },
-        // { id: 6, title: "Refactor auth module", priority: "high", done: false },
-        // { id: 7, title: "Add dark mode support", priority: "med", done: false },
-        // { id: 8, title: "Write unit tests for API", priority: "low", done: false },
-        // { id: 9, title: "Deploy staging build", priority: "high", done: true },
+        { id: 1, title: "Design system audit", priority: "high", done: false },
+        { id: 2, title: "User interview prep", priority: "med", done: false },
+        { id: 3, title: "Update onboarding flow", priority: "med", done: true },
+        { id: 4, title: "Write release notes", priority: "low", done: false },
+        { id: 5, title: "Fix nav bar bug", priority: "high", done: true },
+        { id: 6, title: "Refactor auth module", priority: "high", done: false },
+        { id: 7, title: "Add dark mode support", priority: "med", done: false },
+        { id: 8, title: "Write unit tests for API", priority: "low", done: false },
+        { id: 9, title: "Deploy staging build", priority: "high", done: true },
         { id: 10, title: "Review pull requests", priority: "med", done: true },
     ],
 
