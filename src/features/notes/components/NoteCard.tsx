@@ -1,20 +1,22 @@
 import { Button } from "../../../shared/components/ui/Button";
-import { type Note } from "../../../store/useNoteStore";
+import { SearchTextHighlight } from "../../../shared/components/ui/SearchTextHighlight";
+import { useNoteStore, type Note } from "../../../store/useNoteStore";
 
 type NoteCardProps = {
     note: Note;
 }
 
 export function NoteCard({ note }: NoteCardProps) {
+    const { searchQuery } = useNoteStore();
     return (
         <div className="p-4 flex flex-col h-full bg-bg border border-border rounded-lg shadow-sm hover:shadow-md transition-shadow">
             <div className="flex-1">
                 <h5 className="mb-2 text-xl font-bold text-text-main tracking-tight border-b border-border pb-1">
-                    {note.title}
+                    <SearchTextHighlight text={note.title} query={searchQuery} />
                 </h5>
 
                 <p className="mb-4 text-sm text-text-main leading-relaxed">
-                    {note.content}
+                    <SearchTextHighlight text={note.title} query={searchQuery} />
                 </p>
             </div>
 

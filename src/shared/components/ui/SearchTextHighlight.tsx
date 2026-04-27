@@ -1,12 +1,12 @@
 const escapeRegExp = (str: string) =>
     str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-interface HighlightedTextProps {
+interface SearchTextHighlightProps {
     text: string;
     query: string;
 }
 
-export function HighlightedText({ text, query }: HighlightedTextProps) {
+export function SearchTextHighlight({ text, query }: SearchTextHighlightProps) {
     if (!query.trim()) return <span>{text}</span>;
 
     const escapedQuery = escapeRegExp(query);

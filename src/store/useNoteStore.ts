@@ -15,8 +15,8 @@ type NoteStore = {
     // updateNote: () => void;
     // deleteNote: () => void;
 
-    // searchQuery: string;
-    // setSearchQuery: () => void;
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
 }
 
 export const useNoteStore = create<NoteStore>((set, get) => ({
@@ -59,6 +59,8 @@ export const useNoteStore = create<NoteStore>((set, get) => ({
         }))
     },
 
+    searchQuery: "",
+    setSearchQuery: (query) => set({ searchQuery: query.replace(/\s+/g, " ") }),
 
 
 

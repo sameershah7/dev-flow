@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { navIcons } from "../../config/navigation";
 import profileImg from "../../../assets/vite.svg";
 import { useTheme } from "../../hooks/useTheme";
 import { useTaskStore } from "../../../store/useTaskStore";
+import { useNoteStore } from "../../../store/useNoteStore";
+import { useLocation } from "react-router-dom";
 
 interface NavbarProps {
     onToggleSidebar: () => void;
@@ -12,7 +14,28 @@ interface NavbarProps {
 export default function Navbar({ onToggleSidebar }: NavbarProps) {
     const { theme, toggleTheme } = useTheme()
     const [isProfileOpen, setIsProfileOpen] = useState(false);
-    const { setSearchQuery } = useTaskStore();
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const { pathname } = useLocation();
+
+    const setSearchTaskQuery = useTaskStore(s => s.setSearchQuery);
+    const setSearchNoteQuery = useNoteStore(s => s.setSearchQuery);
+
+    const handleSearch = (value: string) => {
+        setSearchQuery(value);
+
+        if (pathname === "/tasks" || pathname === "/dashboard") {
+            setSearchTaskQuery(value);
+        } else if (pathname === "/notes") {
+            setSearchNoteQuery(value);
+        }
+    };
+
+    useEffect(() => {
+        setSearchQuery("");
+        setSearchTaskQuery("");
+        setSearchNoteQuery("");
+    }, [pathname]);
 
     return (
         <nav className="h-16 bg-bg/80 backdrop-blur-md border-b border-border flex justify-between items-center sticky top-0 z-30 lg:px-4">
@@ -34,7 +57,8 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
                     <input
                         className="bg-transparent border-none outline-0 text-sm ml-2 w-48 text-text-main placeholder:text-text-muted"
                         placeholder="Search anything..."
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                        value={searchQuery}
+                        onChange={(e) => handleSearch(e.target.value)}
                     />
                 </div>
 

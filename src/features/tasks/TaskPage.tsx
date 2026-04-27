@@ -21,9 +21,13 @@ export default function TasksPage() {
             if (activeFilter === "completed") return t.done;
             return true;
         })
-        .filter((t) =>
-            t.title.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        .filter((t) => {
+            const words = (t.title)
+                .toLowerCase()
+                .split(/\s+/);
+
+            return words.some(word => word.startsWith(searchQuery));
+        })
 
     const openDeleteModal = (id: number) => {
         setSelectedTaskId(id);

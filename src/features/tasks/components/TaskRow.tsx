@@ -1,6 +1,7 @@
 import { Button } from "../../../shared/components/ui/Button.tsx";
 import { Checkbox } from "../../../shared/components/ui/Checkbox.tsx";
-import { HighlightedText } from "../../../shared/components/ui/HighlightedText.tsx";
+
+import { SearchTextHighlight } from "../../../shared/components/ui/SearchTextHighlight.tsx";
 import { useTaskStore, type Task } from "../../../store/useTaskStore";
 
 type TaskRowProps = {
@@ -20,7 +21,7 @@ export function TaskRow({ task, onDelete, isComplete, editTask }: TaskRowProps) 
             </td>
 
             <td className="px-6 py-4">
-                <HighlightedText text={task.title} query={searchQuery} />
+                <SearchTextHighlight text={task.title} query={searchQuery} />
             </td>
 
             <td className="px-6 py-4">
