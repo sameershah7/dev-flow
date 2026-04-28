@@ -2,16 +2,16 @@ import { useState } from "react";
 import { useTaskStore, type Task } from "../../store/useTaskStore";
 
 import { TaskHeader } from "./components/TaskHeader";
-import { DeleteTaskModal } from "../../shared/components/feedback/DeleteTaskModal";
 import { TaskTable } from "./components/TaskTabal";
+import { ConfirmationModal } from "../../shared/components/feedback/ConfirmationModal";
 import { TaskFormModal } from "../../shared/components/ui/TaskFormModal";
 
 export default function TasksPage() {
     const [activeFilter, setActiveFilter] = useState<"all" | "pending" | "completed">("all");
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
-    const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
+    const [deleteTaskId, setDeleteTaskId] = useState<number | null>(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
     const [selectedEditTask, setSelectedEditTask] = useState<Task>()
+    const [showDelete, setShowDelete] = useState(false)
 
     const { tasks, searchQuery, deleteTask, toggleTask, updateTask } = useTaskStore();
 
@@ -29,11 +29,6 @@ export default function TasksPage() {
             return words.some(word => word.startsWith(searchQuery));
         })
 
-    const openDeleteModal = (id: number) => {
-        setSelectedTaskId(id);
-        setIsDeleteModalOpen(true);
-    };
-
     const handleUpdateTask = (data: Task) => {
         if (selectedEditTask) {
             updateTask(selectedEditTask.id, data);
@@ -46,14 +41,13 @@ export default function TasksPage() {
         setIsEditModalOpen(true);
     };
 
-    const handleTaskDelete = () => {
-        if (selectedTaskId !== null) {
-            deleteTask(selectedTaskId);
+    const handleDelete = () => {
+        if (deleteTaskId !== null) {
+            deleteTask(deleteTaskId);
         }
-        setIsDeleteModalOpen(false);
-        setSelectedTaskId(null);
+        setShowDelete(false);
+        setDeleteTaskId(null);
     };
-
 
     return (
         <div className="space-y-6">
@@ -66,10 +60,15 @@ export default function TasksPage() {
             }
 
 
-            {isDeleteModalOpen &&
-                <DeleteTaskModal
-                    onClose={() => setIsDeleteModalOpen(false)}
-                    onConfirm={handleTaskDelete}
+            {showDelete &&
+                <ConfirmationModal
+                    isOpen={showDelete}
+                    title="Delete Task?"
+                    description="This will permanently erase your Task. You can't undo this."
+                    confirmLabel="Delete Task"
+                    variant="danger"
+                    onClose={() => setShowDelete(false)}
+                    onConfirm={handleDelete}
                 />
             }
 
@@ -82,7 +81,10 @@ export default function TasksPage() {
                 <div className="overflow-x-auto">
                     <TaskTable
                         tasks={filteredTasks}
-                        onDelete={openDeleteModal}
+                        onDelete={(id) => {
+                            setDeleteTaskId(id)
+                            setShowDelete(true)
+                        }}
                         isComplete={toggleTask}
                         editTask={openEditModal}
                     />

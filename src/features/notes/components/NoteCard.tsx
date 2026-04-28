@@ -5,9 +5,10 @@ import { useNoteStore, type Note } from "../../../store/useNoteStore";
 type NoteCardProps = {
     note: Note;
     updateNote: (data: Note) => void;
+    deleteNote: (id: number) => void;
 }
 
-export function NoteCard({ note, updateNote }: NoteCardProps) {
+export function NoteCard({ note, updateNote, deleteNote }: NoteCardProps) {
     const { searchQuery } = useNoteStore();
 
     return (
@@ -33,7 +34,7 @@ export function NoteCard({ note, updateNote }: NoteCardProps) {
 
                 <div className="flex justify-end gap-3">
                     <Button variant="ghost" onClick={() => updateNote(note)}>Edit</Button>
-                    <Button variant="danger">Delete</Button>
+                    <Button variant="danger" onClick={() => deleteNote(note.id)}>Delete</Button>
                 </div>
             </div>
         </div>

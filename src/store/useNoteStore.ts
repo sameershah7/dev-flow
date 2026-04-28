@@ -13,7 +13,7 @@ type NoteStore = {
 
     addNote: (title: string, content: string) => void;
     updateNote: (id: number, data: { title: string, content: string }) => void;
-    // deleteNote: () => void;
+    deleteNote: (id: number) => void;
 
     searchQuery: string;
     setSearchQuery: (query: string) => void;
@@ -73,12 +73,13 @@ export const useNoteStore = create<NoteStore>((set, get) => ({
 
     },
 
+    deleteNote: (id: number) => {
+        set((state) => ({
+            notes: state.notes.filter((n) => n.id !== id)
+        }))
+    },
+
     searchQuery: "",
     setSearchQuery: (query) => set({ searchQuery: query.replace(/\s+/g, " ") }),
-
-
-
-
-
 
 }))
