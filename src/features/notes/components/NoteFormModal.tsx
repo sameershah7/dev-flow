@@ -6,7 +6,7 @@ import { Button } from "../../../shared/components/ui/Button";
 interface NoteFormModalProps {
     toggleModal: () => void;
     onSave: (data: { title: string; content: string }) => void;
-    initialData?: Note;
+    initialData?: Note | null;
 }
 
 export function NoteFormModal({ toggleModal, onSave, initialData }: NoteFormModalProps) {

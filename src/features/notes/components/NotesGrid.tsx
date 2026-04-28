@@ -4,9 +4,10 @@ import { EmptyState } from "../../../shared/components/ui/EmptyState";
 
 type NoteGridProps = {
     notes: Note[];
+    updateNote: (data: Note) => void;
 }
 
-export function NotesGrid({ notes }: NoteGridProps) {
+export function NotesGrid({ notes, updateNote }: NoteGridProps) {
     if (notes.length === 0) {
         return <EmptyState description="No notes found. Start by adding one!" />
     }
@@ -17,6 +18,7 @@ export function NotesGrid({ notes }: NoteGridProps) {
                 <NoteCard
                     key={note.id}
                     note={note}
+                    updateNote={updateNote}
                 />
             ))}
         </div>

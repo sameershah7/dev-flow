@@ -12,7 +12,7 @@ type NoteStore = {
     notes: Note[];
 
     addNote: (title: string, content: string) => void;
-    // updateNote: () => void;
+    updateNote: (id: number, data: { title: string, content: string }) => void;
     // deleteNote: () => void;
 
     searchQuery: string;
@@ -26,21 +26,21 @@ export const useNoteStore = create<NoteStore>((set, get) => ({
             title: "Project Ideas",
             content: "Build a task manager with notes, dark mode, and search. Maybe add drag and drop later.",
             createdAt: "2026-04-20",
-            updatedAt: "2026-04-22",
+            updatedAt: "",
         },
         {
             id: 2,
             title: "React Tips",
             content: "Use Zustand for global state. Avoid prop drilling. Keep components small and reusable.",
             createdAt: "2026-04-18",
-            updatedAt: "2026-04-21",
+            updatedAt: "",
         },
         {
             id: 3,
             title: "Bugs to Fix",
             content: "Sidebar not closing on mobile. Task toggle not updating UI instantly. Check re-render issues.",
             createdAt: "2026-04-23",
-            updatedAt: "2026-04-23",
+            updatedAt: "",
         },
     ],
 
@@ -57,6 +57,20 @@ export const useNoteStore = create<NoteStore>((set, get) => ({
                 ...state.notes
             ],
         }))
+    },
+
+    updateNote: (id: number, data: { title: string, content: string }) => {
+        set((state) => ({
+            notes: state.notes.map((n) =>
+                n.id === id ? {
+                    ...n,
+                    title: data.title,
+                    content: data.content,
+                    updatedAt: new Date().toISOString().split('T')[0],
+                } : n,
+            )
+        }))
+
     },
 
     searchQuery: "",
