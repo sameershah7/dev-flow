@@ -5,6 +5,7 @@ import { NotesHeader } from "./components/NotesHeader"
 import { NotesGrid } from "./components/NotesGrid"
 import { NoteFormModal } from "./components/NoteFormModal"
 import { ConfirmationModal } from "../../shared/components/feedback/ConfirmationModal"
+import { NoteTable } from "./components/NodeTable"
 
 export default function NotesPage() {
     const [taskUiActive, setTaskUiActive] = useState<"card" | "table">("card")
@@ -46,6 +47,7 @@ export default function NotesPage() {
         setIsNoteFormModalOpen(false);
         setSelectedUpdateNote(null)
     }
+
     const handleDelete = () => {
         if (deleteNoteId !== null) {
             deleteNote(deleteNoteId);
@@ -53,8 +55,6 @@ export default function NotesPage() {
         setShowDelete(false);
         setDeleteNoteId(null);
     };
-
-
 
     return (
         <>
@@ -82,11 +82,20 @@ export default function NotesPage() {
                 toggleNoteModal={() => setIsNoteFormModalOpen(true)}
             />
 
-            {taskUiActive === "card" &&
+            {taskUiActive === "card" ?
                 <NotesGrid
                     notes={filterData}
                     updateNote={handleUpdateNote}
                     deltedNote={(id) => {
+                        setDeleteNoteId(id);
+                        setShowDelete(true)
+                    }}
+                />
+                :
+                <NoteTable
+                    notes={filterData}
+                    updateNote={handleUpdateNote}
+                    deleteNote={(id) => {
                         setDeleteNoteId(id);
                         setShowDelete(true)
                     }}

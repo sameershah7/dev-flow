@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTaskStore, type Task } from "../../store/useTaskStore";
 
 import { TaskHeader } from "./components/TaskHeader";
-import { TaskTable } from "./components/TaskTabal";
+import { TaskTable } from "./components/TaskTable";
 import { ConfirmationModal } from "../../shared/components/feedback/ConfirmationModal";
 import { TaskFormModal } from "../../shared/components/ui/TaskFormModal";
 
