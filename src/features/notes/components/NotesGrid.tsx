@@ -6,9 +6,10 @@ type NoteGridProps = {
     notes: Note[];
     updateNote: (data: Note) => void;
     deleteNote: (id: number) => void;
+    viewMore?: (data: Note) => void;
 }
 
-export function NotesGrid({ notes, updateNote, deleteNote }: NoteGridProps) {
+export function NotesGrid({ notes, updateNote, deleteNote, viewMore }: NoteGridProps) {
     if (notes.length === 0) {
         return <EmptyState description="No notes found. Start by adding one!" />
     }
@@ -21,6 +22,7 @@ export function NotesGrid({ notes, updateNote, deleteNote }: NoteGridProps) {
                     note={note}
                     deleteNote={deleteNote}
                     updateNote={updateNote}
+                    viewMore={viewMore}
                 />
             ))}
         </div>

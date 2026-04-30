@@ -6,21 +6,28 @@ type NoteCardProps = {
     note: Note;
     updateNote: (data: Note) => void;
     deleteNote: (id: number) => void;
+    viewMore?: (data: Note) => void;
 }
 
-export function NoteCard({ note, updateNote, deleteNote }: NoteCardProps) {
+export function NoteCard({ note, updateNote, deleteNote, viewMore }: NoteCardProps) {
     const { searchQuery } = useNoteStore();
+
+    const content = note.content.length > 59 ? note.content.slice(0, 55) : note.content;
 
     return (
         <div className="p-4 flex flex-col h-full bg-bg border border-border rounded-lg shadow-sm hover:shadow-md transition-shadow">
             <div className="flex-1">
                 <h5 className="mb-2 text-xl font-bold text-text-main tracking-tight border-b border-border pb-1">
-                    <SearchTextHighlight text={note.title} query={searchQuery} />
+                    {searchQuery ? <SearchTextHighlight text={note.title} query={searchQuery} /> : note.title}
+                    {note.title.length > 34 && searchQuery && note.title}
                 </h5>
 
-                <p className="mb-4 text-sm text-text-main leading-relaxed">
-                    <SearchTextHighlight text={note.content} query={searchQuery} />
-                </p>
+                <div className="mb-4 text-sm text-text-main leading-relaxed">
+                    {searchQuery ? <SearchTextHighlight text={content} query={searchQuery} /> : content}
+                    {note.content.length > 55 && (
+                        <span className="underline cursor-pointer ml-1" onClick={() => viewMore?.(note)}> More...</span>
+                    )}
+                </div>
             </div>
 
             <div className="mt-auto pt-4">

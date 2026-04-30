@@ -104,7 +104,7 @@ export default function NotesPage() {
 
             {isViewMore
                 ? <ViewMore
-                    data={selectedNote}
+                    data={selectedNote!}
                     handleBack={handleViewMore}
                     onUpdate={handleUpdateNote}
                 />
@@ -113,6 +113,7 @@ export default function NotesPage() {
                         notes={filterData}
                         updateNote={handleUpdateNote}
                         deleteNote={setDeleteNote}
+                        viewMore={handleViewMore}
                     />
                     : <NoteTable
                         notes={filterData}
