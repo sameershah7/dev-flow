@@ -6,23 +6,26 @@ import { NotesGrid } from "./components/NotesGrid"
 import { NoteFormModal } from "./components/NoteFormModal"
 import { ConfirmationModal } from "../../shared/components/feedback/ConfirmationModal"
 import { NoteTable } from "./components/NodeTable"
+import { ViewMore } from "../../shared/components/ui/ViewMore"
 
 export default function NotesPage() {
     const [taskUiActive, setTaskUiActive] = useState<"card" | "table">("card")
     const [isNoteFormModalOpen, setIsNoteFormModalOpen] = useState(false);
-    const [selectedUpdateNote, setSelectedUpdateNote] = useState<Note | null>();
-    const [deleteNoteId, setDeleteNoteId] = useState<number | null>(null);
     const [showDelete, setShowDelete] = useState(false);
+    const [isViewMore, setIsViewMore] = useState(false)
+
+    const [selectedNote, setSelectedNote] = useState<Note | null>();
+    const [deleteNoteId, setDeleteNoteId] = useState<number | null>(null);
 
     const { notes, searchQuery, addNote, updateNote, deleteNote } = useNoteStore();
 
     const handleSaveNote = (data: { title: string, content: string }) => {
         const { title, content } = data;
-        setSelectedUpdateNote(null)
+        setSelectedNote(null)
         if (!title.trim() || !content.trim()) return;
 
-        if (selectedUpdateNote) {
-            updateNote(selectedUpdateNote.id, data)
+        if (selectedNote) {
+            updateNote(selectedNote.id, data)
             return
         }
         addNote(title, content);
@@ -39,13 +42,18 @@ export default function NotesPage() {
         })
 
     const handleUpdateNote = (data: Note) => {
-        setSelectedUpdateNote(data)
+        setSelectedNote(data)
         setIsNoteFormModalOpen(true)
     }
 
     const closeNoteFormModal = () => {
         setIsNoteFormModalOpen(false);
-        setSelectedUpdateNote(null)
+        setSelectedNote(null)
+    }
+
+    const setDeleteNote = (id: number) => {
+        setDeleteNoteId(id)
+        setShowDelete(true)
     }
 
     const handleDelete = () => {
@@ -55,6 +63,17 @@ export default function NotesPage() {
         setShowDelete(false);
         setDeleteNoteId(null);
     };
+
+    const handleViewMore = (data?: Note) => {
+        if (!isViewMore) {
+            setSelectedNote(data)
+            setIsViewMore(true)
+        }
+        else {
+            setIsViewMore(false)
+            setSelectedNote(null);
+        }
+    }
 
     return (
         <>
@@ -73,8 +92,9 @@ export default function NotesPage() {
             {isNoteFormModalOpen && <NoteFormModal
                 toggleModal={closeNoteFormModal}
                 onSave={handleSaveNote}
-                initialData={selectedUpdateNote}
-            />}
+                initialData={selectedNote}
+            />
+            }
 
             <NotesHeader
                 currentFilter={taskUiActive}
@@ -82,25 +102,26 @@ export default function NotesPage() {
                 toggleNoteModal={() => setIsNoteFormModalOpen(true)}
             />
 
-            {taskUiActive === "card" ?
-                <NotesGrid
-                    notes={filterData}
-                    updateNote={handleUpdateNote}
-                    deltedNote={(id) => {
-                        setDeleteNoteId(id);
-                        setShowDelete(true)
-                    }}
+            {isViewMore
+                ? <ViewMore
+                    data={selectedNote}
+                    handleBack={handleViewMore}
+                    onUpdate={handleUpdateNote}
                 />
-                :
-                <NoteTable
-                    notes={filterData}
-                    updateNote={handleUpdateNote}
-                    deleteNote={(id) => {
-                        setDeleteNoteId(id);
-                        setShowDelete(true)
-                    }}
-                />
+                : taskUiActive === "card"
+                    ? <NotesGrid
+                        notes={filterData}
+                        updateNote={handleUpdateNote}
+                        deleteNote={setDeleteNote}
+                    />
+                    : <NoteTable
+                        notes={filterData}
+                        updateNote={handleUpdateNote}
+                        deleteNote={setDeleteNote}
+                        viewMore={handleViewMore}
+                    />
             }
+
         </>
     )
 }

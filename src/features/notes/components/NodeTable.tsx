@@ -6,9 +6,10 @@ type NoteTableProps = {
     notes: Note[];
     deleteNote: (id: number) => void;
     updateNote: (data: Note) => void;
+    viewMore?: (data: Note) => void;
 };
 
-export function NoteTable({ notes, deleteNote, updateNote }: NoteTableProps) {
+export function NoteTable({ notes, deleteNote, updateNote, viewMore }: NoteTableProps) {
 
     const { searchQuery } = useNoteStore();
 
@@ -51,7 +52,7 @@ export function NoteTable({ notes, deleteNote, updateNote }: NoteTableProps) {
                                     </td>
                                     <td className="px-6 py-4 text-right flex justify-end gap-2">
                                         {needsViewBtn && (
-                                            <Button variant="ghost">View</Button>
+                                            <Button variant="ghost" onClick={() => viewMore!(n)}>View</Button>
                                         )}
                                         <Button variant="primary" onClick={() => updateNote(n)}>Edit</Button>
                                         <Button variant="danger" onClick={() => deleteNote(n.id)}>Delete</Button>

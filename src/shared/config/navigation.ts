@@ -13,6 +13,7 @@ import {
     Menu,
     Sun,
     Moon,
+    ArrowLeft,
 } from "lucide-react";
 
 // 1. Navigation Links
@@ -29,7 +30,6 @@ export const sidebarIcons = {
     collapse: SquareChevronLeft,
 };
 
-
 export const navIcons = {
     search: Search,
     profile: User,
@@ -41,4 +41,6 @@ export const navIcons = {
     lighMode: Sun,
 };
 
-
+export const commonIcon = {
+    backArrow: ArrowLeft,
+}
