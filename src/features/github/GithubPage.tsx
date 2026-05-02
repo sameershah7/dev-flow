@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useGithubStore } from "../../store/useGithubStore";
 
 import { ProfileOverview } from "./components/ProfileOverview"
-import { RepoList } from "./components/RepoList"
 import { Contributions } from "./components/Contributions"
+import { RepoLsit } from "./components/RepoList";
 
 export default function GithubPage() {
     const { loadGithubData } = useGithubStore()
@@ -18,7 +18,7 @@ export default function GithubPage() {
             <Contributions />
 
             <div className="md:col-span-2">
-                <RepoList />
+                <RepoLsit />
             </div>
 
         </div>

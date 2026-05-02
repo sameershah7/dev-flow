@@ -5,10 +5,36 @@ import {
     fetchContributions,
 } from "../services/githubServices";
 
+export type GithubUser = {
+    login: string;
+    avatar_url: string;
+    html_url: string;
+    public_repos: number;
+}
+
+export type GithubRepo = {
+    id: number,
+    name: string;
+    description: string | null;
+    stargazers_count: number;
+    forks_count: number;
+    language: string | null;
+};
+
+export type GithubContributions = {
+    total: {
+        [year: string]: number;
+    };
+    contributions: Array<{
+        data: string;
+        count: number;
+    }>
+}
+
 type GithubState = {
-    user: object;
-    repos: object[];
-    contributions: number;
+    user: GithubUser | null;
+    repos: GithubRepo[];
+    contributions: GithubContributions | null;
 
     loading: {
         user: boolean;
@@ -50,7 +76,8 @@ export const useGithubStore = create<GithubState>((set) => ({
             set({
                 user,
                 repos,
-                contributions, loading: {
+                contributions,
+                loading: {
                     user: false,
                     repos: false,
                     contributions: false,
