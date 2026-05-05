@@ -1,3 +1,9 @@
+import { ProfileSettings } from "./components/ProfileSetting";
+
 export default function SettingPage() {
-    return <h1>SettingsPage</h1>
+    return (
+        <div className="grid gap-y-4">
+            <ProfileSettings />
+        </div>
+    )
 }
