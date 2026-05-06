@@ -5,7 +5,8 @@ import profileImg from "../../../assets/vite.svg";
 import { useTheme } from "../../hooks/useTheme";
 import { useTaskStore } from "../../../store/useTaskStore";
 import { useNoteStore } from "../../../store/useNoteStore";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { Button } from "../ui/Button";
 
 interface NavbarProps {
     onToggleSidebar: () => void;
@@ -62,50 +63,62 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
                     />
                 </div>
 
-                <button
-                    onClick={toggleTheme}
-                    className="px-3 py-1 rounded border border-border bg-surface text-text-main hover:bg-hover transition-colors"
-                >
+                <Button onClick={toggleTheme} variant="ghost">
                     {theme === "light" ? <navIcons.darkmode /> : <navIcons.lighMode />}
-                </button>
+                </Button>
 
                 {/* Profile Dropdown */}
-                <div className="relative">
-                    <button
-                        onClick={() => setIsProfileOpen(!isProfileOpen)}
-                        onBlur={() => setTimeout(() => setIsProfileOpen(false), 200)}
-                        className="flex items-center gap-2 p-1 pr-2 hover:bg-hover rounded-full transition-all"
-                    >
-                        <div className="w-8 h-8 rounded-full bg-surface border border-border overflow-hidden">
-                            <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
-                        </div>
-                        <span className="text-sm font-medium text-text-main hidden md:block">Alex Smith</span>
-                        <span className="text-text-muted"><navIcons.dropdown /></span>
-                    </button>
+                <Button
+                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    variant="ghost"
+                    className="flex items-center w-auto gap-x-4"
+                >
+                    <div className="w-8 h-8 rounded-full bg-surface border border-border overflow-hidden">
+                        <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
+                    </div>
+                    <span className="text-sm font-medium text-text-main hidden md:block">Alex Smith</span>
+                    <span className="text-text-muted"><navIcons.dropdown /></span>
+                </Button>
 
-                    {/* Dropdown Menu  */}
-                    <ul className={`absolute right-0 mt-2 w-48 bg-bg border border-border rounded-xl shadow-xl py-2 transition-all duration-200 origin-top-right
+                {/* Dropdown Menu  */}
+                <ul className={`absolute right-0 mt-60 w-48 bg-bg border border-border rounded-xl shadow-xl py-2 transition-all duration-200 origin-top-right
                         ${isProfileOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}
-                    >
-                        <li className="px-4 py-2 text-xs font-semibold text-text-muted uppercase">Account</li>
-                        <li>
-                            <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-text-main hover:bg-hover hover:text-primary transition-colors">
-                                <navIcons.profile />Profile
-                            </button>
-                        </li>
-                        <li>
-                            <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-text-main hover:bg-hover hover:text-primary transition-colors">
-                                <navIcons.settings /> Settings
-                            </button>
-                        </li>
-                        <hr className="my-1 border-border" />
-                        <li>
-                            <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-error hover:bg-error/10 transition-colors">
-                                <navIcons.logout />LogOut
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+                >
+                    <li className="px-4 py-2 text-xs font-semibold text-text-muted uppercase">Account</li>
+                    <li>
+                        <Link to={"settings#profile"}>
+                            <Button className="w-full" variant="ghost">
+                                <div className="flex gap-x-2 items-center">
+                                    <navIcons.profile />
+                                    <span>
+                                        Profile
+                                    </span>
+                                </div>
+                            </Button>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={"settings"}>
+                            <Button className="w-full" variant="ghost">
+                                <div className="flex gap-x-2 items-center">
+                                    <navIcons.settings />
+                                    <span>
+                                        Settings
+                                    </span>
+                                </div>
+                            </Button>
+                        </Link>
+                    </li>
+                    <hr className="my-1 border-border" />
+                    <li>
+                        <Button className="w-full text-error!" variant="ghost">
+                            <div className="flex gap-x-2 items-center">
+                                <navIcons.logout />
+                                LogOut
+                            </div>
+                        </Button>
+                    </li>
+                </ul>
             </div>
         </nav>
     );

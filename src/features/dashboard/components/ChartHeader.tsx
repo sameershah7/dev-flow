@@ -1,3 +1,5 @@
+import { Button } from "../../../shared/components/ui/Button";
+
 interface ChartHeaderProps {
     toggleModal: () => void;
     taskCount?: number;
@@ -13,13 +15,7 @@ export default function ChartHeader({ toggleModal, taskCount }: ChartHeaderProps
                 </span>
             </div>
 
-            <button
-                onClick={toggleModal}
-                className="flex items-center gap-2 px-3 py-1.5 bg-primary text-white hover:opacity-90 rounded-lg text-sm font-medium transition-all active:scale-95">
-                {/* You can replace this + with an actual icon like <PlusIcon /> */}
-                <span className="text-lg leading-none">+</span>
-                <span className="hidden sm:inline">Add Task</span>
-            </button>
+            <Button onClick={toggleModal}>Add Task</Button>
 
         </div>
     )

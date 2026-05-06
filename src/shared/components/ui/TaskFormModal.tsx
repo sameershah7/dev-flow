@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { type Task } from "../../../store/useTaskStore";
+import { Button } from "./Button";
 
 interface TaskFormModalProps {
     toggleModal: () => void;
@@ -42,7 +43,7 @@ export function TaskFormModal({ toggleModal, onSave, initialData }: TaskFormModa
                     <h2 className="text-lg font-bold text-text-main">
                         {isEditMode ? "Update Task" : "New Task"}
                     </h2>
-                    <button onClick={toggleModal} className="text-text-muted hover:text-text-main text-2xl">×</button>
+                    <Button onClick={toggleModal}>x</Button>
                 </div>
 
                 <div className="p-6 space-y-5">
@@ -72,18 +73,12 @@ export function TaskFormModal({ toggleModal, onSave, initialData }: TaskFormModa
                 </div>
 
                 <div className="flex items-center justify-end gap-3 p-4 bg-surface/30 border-t border-border">
-                    <button onClick={toggleModal} className="px-4 py-2 text-sm text-text-main hover:bg-hover rounded-lg">
-                        Cancel
-                    </button>
-                    <button
-                        onClick={handleSubmit}
-                        className="px-6 py-2 text-sm font-semibold bg-primary text-white hover:brightness-110 rounded-lg active:scale-95 transition-all shadow-md"
-                    >
+                    <Button onClick={toggleModal} variant="ghost">Cancel</Button>
+                    <Button onClick={handleSubmit} >
                         {isEditMode ? "Save Changes" : "Create Task"}
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
     );
 }
-
