@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useAuthStore } from "../../../store/useAuthStore";
 
 import { navIcons } from "../../config/navigation";
 import profileImg from "../../../assets/vite.svg";
@@ -17,6 +18,7 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
+    const logout = useAuthStore((state) => state.logout)
     const { pathname } = useLocation();
 
     const setSearchTaskQuery = useTaskStore(s => s.setSearchQuery);
@@ -111,7 +113,11 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
                     </li>
                     <hr className="my-1 border-border" />
                     <li>
-                        <Button className="w-full text-error!" variant="ghost">
+                        <Button
+                            className="w-full text-error!"
+                            variant="ghost"
+                            onClick={() => logout()}
+                        >
                             <div className="flex gap-x-2 items-center">
                                 <navIcons.logout />
                                 LogOut
