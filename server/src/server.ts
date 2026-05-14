@@ -1,15 +1,13 @@
 import express from "express"
+import { env } from "./config/env.js";
+import healthRoutes from "./routes/health.routes.js"
 
 const app = express();
 
-const PORT = 5000;
+app.use(express.json())
 
-app.get("/", (_req, res) => {
-    res.json({
-        message: "Backend running",
-    })
-});
+app.use("/api/v1", healthRoutes)
 
-app.listen(PORT, () => {
-    console.log(`Sever running on port: ${PORT}`)
+app.listen(env.PORT, () => {
+    console.log(`Sever running on port: ${env.PORT}`)
 })
