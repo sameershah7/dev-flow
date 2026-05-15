@@ -10,7 +10,13 @@ const envSchema = z.object({
         "test",
     ]),
 
-    PORT: z.coerce.number().default(5000)
+    PORT: z.coerce.number().default(5000),
+
+    DATABASE_URL: z.url(),
+    REDIS_URL: z.url(),
+
+    JWT_ACCESS_SECRET: z.string().min(32),
+    JWT_REFRESH_SECRET: z.string().min(32),
 })
 
 const parsedEnv = envSchema.safeParse(
